@@ -24,6 +24,8 @@ jobs:
       run: sudo apt-get update
     - name: Install c8y
       run: sudo apt-get install go-c8y-cli
+    - name: Adding source
+      run: source "/etc/go-c8y-cli/shell/c8y.plugin.sh"
     - name: Setting/Session create
       run: c8y sessions create --type dev --host "https://${C8Y_HOST}" --username "${C8Y_USER}" --password "$C8Y_PW"
     - name: Set Session  
