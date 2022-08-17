@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Showing ENV
-      run: echo "The used C8Y User is:$C8Y_USER"
+      run: echo "The used C8Y User is: {{$C8Y_USER}}"
     - name: Installing dependencies
       run: sudo apt-get install -y zip unzip wget curl gnupg2 apt-transport-https
     - name: Get c8y
