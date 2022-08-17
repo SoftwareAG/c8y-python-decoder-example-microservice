@@ -24,15 +24,15 @@ jobs:
       run: sudo apt-get update
     - name: Install c8y
       run: sudo apt-get install go-c8y-cli
+    - name: Setting/Session create
+      run: c8y sessions create --type dev --host "https://${C8Y_HOST}" --username "${C8Y_USER}" --password "$C8Y_PW"
+    - name: Set Session  
+      run: eval $(c8y sessions set --shell bash --session ~/.cumulocity//${C8Y_HOST}-${C8Y_USER}.json)
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-microservice-name
     - name: Saving Container
       run: docker save my-microservice-name > "image.tar"
     - name: Zipping the container with the cumulocity manifest
       run: zip my-microservice-name cumulocity.json image.tar
-    - name: Setting/Session create
-      run: c8y sessions create --type dev --host "https://${C8Y_HOST}" --username "${C8Y_USER}" --password "$C8Y_PW"
-    - name: Set Session  
-      run: eval $(c8y sessions set --shell bash --session ~/.cumulocity//${C8Y_HOST}-${C8Y_USER}.json)
     - name: Uploading Microservice
       run: c8y microservices create --file my-microservice-name.zip
