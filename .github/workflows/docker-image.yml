@@ -15,11 +15,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Installing dependencies
-      run: sudo apt-get install zip unzip wget
+      run: sudo apt-get install -y zip unzip wget curl gnupg2 apt-transport-https
     - name: Get c8y
-      run: wget -O /etc/apk/keys/reuben.d.miller\@gmail.com-61e3680b.rsa.pub https://reubenmiller.github.io/go-c8y-cli-repo/alpine/PUBLIC.KEY
+      run: curl https://reubenmiller.github.io/go-c8y-cli-repo/debian/PUBLIC.KEY | gpg --dearmor | sudo tee /usr/share/keyrings/go-c8y-cli-archive-keyring.gpg >/dev/null
+    - name: Add keys
+      run: sudo sh -c "echo 'deb [signed-by=/usr/share/keyrings/go-c8y-cli-archive-keyring.gpg] http://reubenmiller.github.io/go-c8y-cli-repo/debian stable main' >> /etc/apt/sources.list"
+    - name: Apt update
+      run: sudo apt-get update
     - name: Install c8y
-      run: sh -c "echo 'https://reubenmiller.github.io/go-c8y-cli-repo/alpine/stable/main'" >> /etc/apk/repositories   
+      run: sudo apt-get install go-c8y-cli
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-microservice-name
     - name: Saving Container
