@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Installing dependencies
-      run: apt-get install zip unzip wget
+      run: sudo apt-get install zip unzip wget
     - name: Get c8y
       run: wget -O /etc/apk/keys/reuben.d.miller\@gmail.com-61e3680b.rsa.pub https://reubenmiller.github.io/go-c8y-cli-repo/alpine/PUBLIC.KEY
     - name: Install c8y
