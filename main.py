@@ -1,24 +1,24 @@
 #!flask/bin/python
+import logging
+logger = logging.getLogger('Logger')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger.info("Logger was initialized")
+
 from flask import Flask, jsonify, request
 import os
 import decoder
 import sys
 from API.measurement import createMeasurement
 import json
-import logging
 from API.inventory import checkExternalId
 
 app = Flask(__name__)
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger('Logger')
-
 @app.route('/decode', methods=['POST'] )
 def decode():
     payload = request.get_json(force=True)
-    logger.info('Incoming Message: ' + str(payload))
+    logger.debug('Incoming Message: ' + str(payload))
     dec_payload = decoder.decode(payload['payload'])
-
     external_id = dec_payload['id']
     logger.debug(f'Thats the external id found in the hex payload: {external_id}')
     internal_id = checkExternalId(external_id)
@@ -55,4 +55,5 @@ def environment():
     return jsonify(environment_data)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    logger.info("Starting")
+    app.run(host='0.0.0.0', port=5001)

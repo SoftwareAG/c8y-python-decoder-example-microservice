@@ -1,13 +1,13 @@
+import logging
+logger = logging.getLogger(__name__)
+logger.info('Logger for Measurements was initialised')
+
 import requests
 from flask import Flask, jsonify, request
-import logging
 from datetime import datetime, date, time, timedelta
 from base64 import b64encode
 import API.authentication as auth
 
-
-logger = logging.getLogger('Measurement API')
-logger.info('Logger for Measurements was initialised')
 Auth = auth.Authentication()
 
 def createMeasurement(payload):

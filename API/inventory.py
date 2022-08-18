@@ -1,11 +1,11 @@
-import requests
 import logging
+logger = logging.getLogger(__name__)
+logger.info('Logger for Inventory was initialised')
+
+import requests
 import json
 import API.authentication as auth
 
-
-logger = logging.getLogger('Inventory API')
-logger.info('Logger for Inventory was initialised')
 Auth = auth.Authentication()
 
 
