@@ -10,6 +10,7 @@ import API.authentication as auth
 
 Auth = auth.Authentication()
 
+
 def createMeasurement(payload):
     logger.info('Creating measurements in c8y')
     try:
